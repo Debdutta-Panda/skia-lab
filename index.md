@@ -130,7 +130,7 @@ The Skia Build should be look like below
       - `externals`
 
 # Minimal Working code
-Here is the minimal code whic will just draw a rectangle:
+Here is the minimal code which will just draw a rectangle:
 ```cpp
 #include <windows.h>
 
