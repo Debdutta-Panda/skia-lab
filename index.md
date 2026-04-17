@@ -339,3 +339,5 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE, PWSTR, int nCmdShow)
 }
 ```
 This minimal code need only `skia.lib` and no other libs from skia.
+
+<img width="492" height="373" alt="image" src="https://github.com/user-attachments/assets/60f5eb7e-2816-45fa-8e23-1cebec6b66ea" />
