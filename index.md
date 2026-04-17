@@ -21,6 +21,16 @@ To use skia you need:
 # Setup Visual Studio
 1. Create a win32 c++ desktop project.
 2. I am assuming you have downloaded or build the skia and put at F:\skiaCombined
+3. Set
+```
+F:\skiaCombined\skia;F:\skiaCombined\skia\third_party\externals\dawn\include;F:\skiaCombined\skia\out\combined\gen;F:\skiaCombined\skia\out\combined\gen\third_party\dawn\include;
+```
+as additional include directories.
+4. Set
+```
+F:\skiaCombined\skia\out\combined;F:\skiaCombined\skia\out\combined\cmake_dawn\src\dawn
+```
+as additional lib directories.
 
 The Skia Build should be look like below
 - `F:\skiaCombined`
