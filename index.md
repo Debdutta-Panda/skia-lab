@@ -31,6 +31,11 @@ as additional include directories.
 F:\skiaCombined\skia\out\combined;F:\skiaCombined\skia\out\combined\cmake_dawn\src\dawn
 ```
 as additional lib directories.
+5. Set
+```
+skia.lib;skparagraph.lib;skshaper.lib;svg.lib;skunicode_core.lib;skunicode_icu.lib;icu.lib;dawn_combined.lib;dawn_proc.lib;d3d11.lib;d3d12.lib;dxgi.lib;opengl32.lib;user32.lib;gdi32.lib;ole32.lib;shell32.lib;advapi32.lib;windowscodecs.lib;usp10.lib;fontsub.lib;ws2_32.lib;winmm.lib;OneCore.Lib;
+```
+as additional libs.
 
 The Skia Build should be look like below
 - `F:\skiaCombined`
