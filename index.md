@@ -9,3 +9,6 @@ You can download skia by following intstructions from https://skia.org/docs/user
 
 # Build Skia
 Skia can be build by following instructions from https://skia.org/docs/user/build/.
+
+# Use Skia
+I already have build skia based on milestone 149. You can download it from https://drive.google.com/file/d/1ZNvqQbNT0D6eydupOBWNH7xpy0c1d8Bc/view?usp=sharing.
