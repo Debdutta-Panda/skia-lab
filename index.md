@@ -128,3 +128,214 @@ The Skia Build should be look like below
       - `xps`
     - `third_party`
       - `externals`
+
+# Minimal Working code
+Here is the minimal code whic will just draw a rectangle:
+```cpp
+#include <windows.h>
+
+#include <algorithm>
+
+#include "include/core/SkCanvas.h"
+#include "include/core/SkColor.h"
+#include "include/core/SkImage.h"
+#include "include/core/SkImageInfo.h"
+#include "include/core/SkPaint.h"
+#include "include/core/SkRect.h"
+#include "include/core/SkSurface.h"
+
+namespace {
+    constexpr wchar_t kWindowClassName[] = L"SkiaExplorer";
+    constexpr int kInitialWidth = 960;
+    constexpr int kInitialHeight = 640;
+
+    struct AppState {
+        HWND hwnd = nullptr;
+        int width = kInitialWidth;
+        int height = kInitialHeight;
+        sk_sp<SkSurface> cpuSurface;
+    };
+
+    [[noreturn]] void Fail(const wchar_t* title, const wchar_t* message)
+    {
+        MessageBoxW(nullptr, message, title, MB_ICONERROR | MB_OK);
+        std::exit(EXIT_FAILURE);
+    }
+
+    void RecreateCpuSurface(AppState& state)
+    {
+        if (state.width <= 0 || state.height <= 0)
+        {
+            state.cpuSurface.reset();
+            return;
+        }
+
+        const SkImageInfo imageInfo = SkImageInfo::Make(state.width, state.height, kBGRA_8888_SkColorType, kPremul_SkAlphaType);
+        state.cpuSurface = SkSurfaces::Raster(imageInfo);
+        if (!state.cpuSurface)
+        {
+            Fail(L"Skia Explorer", L"Failed to create CPU surface.");
+        }
+    }
+
+    void DrawScene(SkCanvas* canvas, const AppState& state)
+    {
+        canvas->clear(SkColorSetRGB(244, 241, 234));
+
+        SkPaint paint;
+        paint.setAntiAlias(true);
+        paint.setColor(SkColorSetARGB(255, 34, 91, 191));
+
+        const float rectWidth = std::max(1.0f, std::min(320.0f, static_cast<float>(state.width) - 80.0f));
+        const float rectHeight = std::max(1.0f, std::min(180.0f, static_cast<float>(state.height) - 80.0f));
+        canvas->drawRect(SkRect::MakeXYWH(40.0f, 40.0f, rectWidth, rectHeight), paint);
+    }
+
+    void Paint(AppState& state, HDC paintDc)
+    {
+        if (!state.cpuSurface)
+        {
+            RecreateCpuSurface(state);
+        }
+        if (!state.cpuSurface)
+        {
+            return;
+        }
+
+        DrawScene(state.cpuSurface->getCanvas(), state);
+
+        sk_sp<SkImage> image = state.cpuSurface->makeImageSnapshot();
+        if (!image)
+        {
+            return;
+        }
+
+        SkPixmap pixmap;
+        if (!image->peekPixels(&pixmap))
+        {
+            return;
+        }
+
+        BITMAPINFO bmi{};
+        bmi.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+        bmi.bmiHeader.biWidth = pixmap.width();
+        bmi.bmiHeader.biHeight = -pixmap.height();
+        bmi.bmiHeader.biPlanes = 1;
+        bmi.bmiHeader.biBitCount = 32;
+        bmi.bmiHeader.biCompression = BI_RGB;
+
+        StretchDIBits(
+            paintDc,
+            0, 0, state.width, state.height,
+            0, 0, pixmap.width(), pixmap.height(),
+            pixmap.addr(),
+            &bmi,
+            DIB_RGB_COLORS,
+            SRCCOPY);
+    }
+
+    LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+    {
+        auto* state = reinterpret_cast<AppState*>(GetWindowLongPtrW(hwnd, GWLP_USERDATA));
+
+        switch (msg)
+        {
+        case WM_NCCREATE:
+        {
+            auto* create = reinterpret_cast<CREATESTRUCTW*>(lParam);
+            auto* initialState = reinterpret_cast<AppState*>(create->lpCreateParams);
+            initialState->hwnd = hwnd;
+            SetWindowLongPtrW(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(initialState));
+            return TRUE;
+        }
+
+        case WM_CREATE:
+            RecreateCpuSurface(*state);
+            return 0;
+
+        case WM_SIZE:
+            if (!state || wParam == SIZE_MINIMIZED)
+            {
+                return 0;
+            }
+
+            state->width = std::max(1, static_cast<int>(LOWORD(lParam)));
+            state->height = std::max(1, static_cast<int>(HIWORD(lParam)));
+            RecreateCpuSurface(*state);
+            InvalidateRect(hwnd, nullptr, FALSE);
+            return 0;
+
+        case WM_PAINT:
+        {
+            PAINTSTRUCT ps{};
+            HDC dc = BeginPaint(hwnd, &ps);
+            if (state)
+            {
+                Paint(*state, dc);
+            }
+            EndPaint(hwnd, &ps);
+            return 0;
+        }
+
+        case WM_DESTROY:
+            delete state;
+            SetWindowLongPtrW(hwnd, GWLP_USERDATA, 0);
+            PostQuitMessage(0);
+            return 0;
+        }
+
+        return DefWindowProcW(hwnd, msg, wParam, lParam);
+    }
+}
+
+int WINAPI wWinMain(HINSTANCE instance, HINSTANCE, PWSTR, int nCmdShow)
+{
+    WNDCLASSEXW wc{};
+    wc.cbSize = sizeof(wc);
+    wc.style = CS_HREDRAW | CS_VREDRAW;
+    wc.lpfnWndProc = WndProc;
+    wc.hInstance = instance;
+    wc.hCursor = LoadCursorW(nullptr, IDC_ARROW);
+    wc.hbrBackground = nullptr;
+    wc.lpszClassName = kWindowClassName;
+
+    if (!RegisterClassExW(&wc))
+    {
+        Fail(L"Skia Explorer", L"Failed to register window class.");
+    }
+
+    auto* state = new AppState{};
+
+    HWND hwnd = CreateWindowExW(
+        0,
+        kWindowClassName,
+        L"AnimassionV5 Skia Explorer - Minimal CPU",
+        WS_OVERLAPPEDWINDOW,
+        CW_USEDEFAULT,
+        CW_USEDEFAULT,
+        kInitialWidth,
+        kInitialHeight,
+        nullptr,
+        nullptr,
+        instance,
+        state);
+    if (!hwnd)
+    {
+        delete state;
+        Fail(L"Skia Explorer", L"Failed to create explorer window.");
+    }
+
+    ShowWindow(hwnd, nCmdShow);
+    UpdateWindow(hwnd);
+
+    MSG msg{};
+    while (GetMessageW(&msg, nullptr, 0, 0) > 0)
+    {
+        TranslateMessage(&msg);
+        DispatchMessageW(&msg);
+    }
+
+    return static_cast<int>(msg.wParam);
+}
+```
+This minimal code need only `skia.lib` and no other libs from skia.
