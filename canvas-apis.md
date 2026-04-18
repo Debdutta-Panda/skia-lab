@@ -27,3 +27,4 @@ Example:
 canvas->drawColor(SkColorSetARGB(255, 244, 120, 0), SkBlendMode::kSrc);
 canvas->drawColor(SkColorSetARGB(255, 0, 120, 0), SkBlendMode::kColorDodge);
 ```
+<img width="631" height="529" alt="image" src="https://github.com/user-attachments/assets/b0cd4120-05f5-49ca-affe-14f08b460838" />
