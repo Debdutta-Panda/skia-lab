@@ -13,7 +13,7 @@ Example:
 ```cpp
 canvas->clear(SkColorSetRGB(244, 120, 0));
 ```
-<img width="946" height="633" alt="image" src="https://github.com/user-attachments/assets/6f9bd25d-195d-4efc-babc-285e8c008b4e" />
+<img width="400" alt="image" src="https://github.com/user-attachments/assets/6f9bd25d-195d-4efc-babc-285e8c008b4e" />
 
 ## DrawColor
 If you want control on blend mode to clear the whole clipped area then you should use `drawColor`.
@@ -27,7 +27,7 @@ Example:
 canvas->drawColor(SkColorSetARGB(255, 244, 120, 0), SkBlendMode::kSrc);
 canvas->drawColor(SkColorSetARGB(255, 0, 120, 0), SkBlendMode::kColorDodge);
 ```
-<img width="631" height="529" alt="image" src="https://github.com/user-attachments/assets/b0cd4120-05f5-49ca-affe-14f08b460838" />
+<img width="400" alt="image" src="https://github.com/user-attachments/assets/b0cd4120-05f5-49ca-affe-14f08b460838" />
 
 # Paint
 Paint is the container of many configurations for a painting like:
@@ -54,7 +54,7 @@ paint.setColor(SK_ColorRED);
 canvas->drawLine(20, 20, 40, 40, paint);
 ```
 
-<img width="95" height="92" alt="image" src="https://github.com/user-attachments/assets/df7c2578-08e6-4cca-8ef2-d90ce4dc6d71" />
+<img width="400" alt="image" src="https://github.com/user-attachments/assets/df7c2578-08e6-4cca-8ef2-d90ce4dc6d71" />
 
 # DrawRect
 
@@ -69,7 +69,7 @@ SkRect rect = {100,100,200,200};
 canvas->drawRect(rect, paint);
 ```
 
-<img width="277" height="261" alt="image" src="https://github.com/user-attachments/assets/a8749841-2680-4a3e-b1d1-140ef81c4a68" />
+<img width="400" alt="image" src="https://github.com/user-attachments/assets/a8749841-2680-4a3e-b1d1-140ef81c4a68" />
 
 
 # Apis
