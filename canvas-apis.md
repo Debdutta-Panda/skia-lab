@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="/assets/css/style.css">
+
 # Canvas Apis
 We will discuss about canvas apis
 
