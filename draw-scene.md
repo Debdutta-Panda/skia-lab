@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="/assets/css/style.css">
+
 # DrawScene
 ```cpp
 void DrawScene(SkCanvas* canvas, const AppState& state)
