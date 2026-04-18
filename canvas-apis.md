@@ -41,6 +41,21 @@ Example:
 SkPaint paint;
 paint.setColor(SK_ColorRED);
 ```
+# DrawLine
+`void drawLine(SkScalar x0, SkScalar y0, SkScalar x1, SkScalar y1, const SkPaint& paint)`
+
+`void drawLine(SkPoint p0, SkPoint p1, const SkPaint& paint)`
+
+Example:
+```cpp
+canvas->clear(SK_ColorWHITE);
+SkPaint paint;
+paint.setColor(SK_ColorRED);
+canvas->drawLine(20, 20, 40, 40, paint);
+```
+
+<img width="95" height="92" alt="image" src="https://github.com/user-attachments/assets/df7c2578-08e6-4cca-8ef2-d90ce4dc6d71" />
+
 
 # Apis
 
