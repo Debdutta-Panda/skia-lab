@@ -71,6 +71,22 @@ canvas->drawRect(rect, paint);
 
 <img width="400" alt="image" src="https://github.com/user-attachments/assets/a8749841-2680-4a3e-b1d1-140ef81c4a68" />
 
+# DrawOval
+
+`void drawOval(const SkRect& oval, const SkPaint& paint)`
+
+Example:
+```cpp
+canvas->clear(SK_ColorWHITE);
+SkPaint paint;
+paint.setColor(SK_ColorRED);
+SkRect rect = {100,100,200,300};
+canvas->drawOval(rect, paint);
+```
+
+<img width="400" alt="image" src="https://github.com/user-attachments/assets/2b05bd00-10d3-42b7-8cd8-10d42223ccce" />
+
+
 
 # Apis
 
