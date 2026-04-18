@@ -29,9 +29,23 @@ canvas->drawColor(SkColorSetARGB(255, 0, 120, 0), SkBlendMode::kColorDodge);
 ```
 <img width="631" height="529" alt="image" src="https://github.com/user-attachments/assets/b0cd4120-05f5-49ca-affe-14f08b460838" />
 
+# Paint
+Paint is the container of many configurations for a painting like:
+* color
+* gradient
+* stroke width
+* stroke style, etc
+
+Example:
+```cpp
+SkPaint paint;
+paint.setColor(SK_ColorRED);
+```
+
 # Apis
 
 * drawColor
 * clear
 * drawPoint
 * drawPaint
+* drawLine
