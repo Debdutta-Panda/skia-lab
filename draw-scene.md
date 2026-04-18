@@ -16,4 +16,5 @@ void DrawScene(SkCanvas* canvas, const AppState& state)
 This is the function where most of the time we will live.
 
 [Previous: Introduction](https://debdutta-panda.github.io/skia-lab)
+
 [Next: Canvas](https://debdutta-panda.github.io/skia-lab/canvas)
