@@ -13,6 +13,6 @@ void DrawScene(SkCanvas* canvas, const AppState& state)
     canvas->drawRect(SkRect::MakeXYWH(40.0f, 40.0f, rectWidth, rectHeight), paint);
 }
 ```
-This is the function where most of the time we will lieve.
+This is the function where most of the time we will live.
 
 [Previous: Introduction](https://debdutta-panda.github.io/skia-lab)
