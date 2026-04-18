@@ -14,3 +14,5 @@ void DrawScene(SkCanvas* canvas, const AppState& state)
 }
 ```
 This is the function where most of our time and interrest will be used.
+
+[Previous: Introduction]([Next: DrawScene](https://debdutta-panda.github.io/skia-lab))
