@@ -56,6 +56,21 @@ canvas->drawLine(20, 20, 40, 40, paint);
 
 <img width="95" height="92" alt="image" src="https://github.com/user-attachments/assets/df7c2578-08e6-4cca-8ef2-d90ce4dc6d71" />
 
+# DrawRect
+
+`void drawRect(const SkRect& rect, const SkPaint& paint)`
+
+Example:
+```cpp
+canvas->clear(SK_ColorWHITE);
+SkPaint paint;
+paint.setColor(SK_ColorRED);
+SkRect rect = {100,100,200,200};
+canvas->drawRect(rect, paint);
+```
+
+<img width="277" height="261" alt="image" src="https://github.com/user-attachments/assets/a8749841-2680-4a3e-b1d1-140ef81c4a68" />
+
 
 # Apis
 
